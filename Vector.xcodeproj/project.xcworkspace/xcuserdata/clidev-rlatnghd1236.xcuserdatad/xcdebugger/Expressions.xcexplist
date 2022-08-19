@@ -3,7 +3,30 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "MyVector&lt;int&gt;::insert(MyVector&lt;int&gt;::iterator const&amp;, int):MyVector.h">
+      </ContextState>
+      <ContextState
+         contextName = "MyVector&lt;int&gt;::erase(MyVector&lt;int&gt;::iterator const&amp;):MyVector.h">
+      </ContextState>
+      <ContextState
          contextName = "MyVector&lt;int&gt;::assign(MyVector&lt;int&gt;::iterator const&amp;, MyVector&lt;int&gt;::iterator):MyVector.h">
+      </ContextState>
+      <ContextState
+         contextName = "void QuickSort&lt;int&gt;(int*, int, int):main.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "arr+3">
+            </PersistentString>
+            <PersistentString
+               value = "arr+2">
+            </PersistentString>
+            <PersistentString
+               value = "arr+1">
+            </PersistentString>
+            <PersistentString
+               value = "arr+4">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "MyVector&lt;int&gt;::end():MyVector.h">
@@ -21,6 +44,15 @@
                value = "&amp;array[1]">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MyVector&lt;int&gt;::insert(MyVector&lt;int&gt;::iterator const&amp;, MyVector&lt;int&gt;::iterator, MyVector&lt;int&gt;::iterator):MyVector.h">
+      </ContextState>
+      <ContextState
+         contextName = "MyVector&lt;int&gt;::insert(MyVector&lt;int&gt;::iterator const&amp;, MyVector&lt;int&gt;::iterator const&amp;, MyVector&lt;int&gt;::iterator const&amp;):MyVector.h">
+      </ContextState>
+      <ContextState
+         contextName = "MyVector&lt;int&gt;::iterator::operator!=(MyVector&lt;int&gt;::iterator const&amp;):MyVector.h">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

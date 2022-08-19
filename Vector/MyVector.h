@@ -1,6 +1,6 @@
 #pragma once
-#include <stdio.h>
 #include <algorithm>
+#include <initializer_list>
 
 template <typename T>
 class MyVector
@@ -39,6 +39,21 @@ public:
             return iterator(array, pos - n);
         }
         
+        T& operator*()
+        {
+            return array[pos];
+        }
+        
+        bool operator==(const iterator& it)
+        {
+            return &array[pos] == &it.array[it.pos];
+        }
+        
+        bool operator!=(const iterator& it)
+        {
+            bool result = &array[pos] != &it.array[it.pos];
+            return result;
+        }
     };
     
 private:
@@ -47,18 +62,12 @@ private:
     size_t vectorCapacity;
 
 public:
-    MyVector()
-    : array(new T[1]), vectorSize(0), vectorCapacity(1) {}
+    MyVector(size_t defaultCapacity = 0)
+    : array(new T[defaultCapacity]), vectorSize(0), vectorCapacity(defaultCapacity) {}
     
-    template <typename... _Args>
-    MyVector(_Args&&... args) : array(new T[sizeof...(args)]), vectorSize(0), vectorCapacity(sizeof...(args))
+    MyVector(std::initializer_list<T> list) : array(new T[list.size()]), vectorSize(list.size()), vectorCapacity(list.size())
     {
-        push_back(args...);
-    }
-    
-    MyVector(MyVector& target) : array(new T[target.capacity()]), vectorSize(0), vectorCapacity(target.capacity())
-    {
-        
+        std::copy(list.begin(), list.end(), array);
     }
     
     ~MyVector(){}
@@ -110,26 +119,14 @@ public:
         return array[vectorSize-1];
     }
     
-    template <typename... _Args>
-    void push_back(T var, _Args&&... args)
-    {
-        push_back(var);
-        push_back(args...);
-    }
-    
     void push_back(T var)
     {
+        
         if (vectorSize >= vectorCapacity)
         {
-            vectorCapacity *= 2;
+            vectorCapacity == 0 ? ++vectorCapacity : vectorCapacity *= 2;
             
-            T* newArr = new T[vectorCapacity];
-            
-            memcpy(newArr, array, sizeof(T) * vectorSize);
-            
-            delete[] array;
-
-            array = newArr;
+            reserve(vectorCapacity);
         }
         
         array[vectorSize] = var;
@@ -146,32 +143,64 @@ public:
         --vectorSize;
     }
     
-    iterator insert(const iterator& itor,  T var)
+    iterator insert(const iterator& iter,  T var)
     {
         if (vectorSize >= vectorCapacity)
         {
-            vectorCapacity *= 2;
-            T* newArr = new T[vectorCapacity];
-            
-            memcpy(newArr, array, sizeof(T) * vectorSize);
-            
-            delete[] array;
-            
-            array = newArr;
+            reserve(vectorCapacity == 0 ? vectorCapacity + 1: vectorCapacity * 2);
         }
         
-        memcpy(&array[itor.pos+1], &array[itor.pos], sizeof(T) * (vectorSize - itor.pos));
-        array[itor.pos] = var;
+        memmove(&array[iter.pos+1], &array[iter.pos], sizeof(T) * (vectorSize - iter.pos));
+        array[iter.pos] = var;
         ++vectorSize;
         
-        return itor;
+        return iterator(array, iter.pos);
+    }
+    
+    iterator insert(const iterator& iter, std::initializer_list<T> list)
+    {
+        if(vectorSize + list.size() > vectorCapacity)
+        {
+            reserve(vectorSize + list.size());
+        }
+
+        memmove(&array[iter.pos + list.size()], &array[iter.pos], sizeof(T) * (vectorSize - iter.pos));
+        std::copy(list.begin(), list.end(), &array[iter.pos]);
+
+        vectorSize += list.size();
+
+        return iterator(array, iter.pos);
+    }
+    
+    iterator insert(const iterator& iter, const iterator& startIter, const iterator& endIter)
+    {
+        size_t insertSize = endIter.pos - startIter.pos;
+        
+        if (vectorSize + insertSize > vectorCapacity)
+        {
+            reserve(vectorSize + insertSize);
+        }
+        
+        memmove(&array[iter.pos + insertSize], &array[iter.pos], sizeof(T) * (vectorSize - iter.pos));
+        memmove(&array[iter.pos], startIter.array, sizeof(T) * insertSize);
+        
+        vectorSize += insertSize;
+        
+        return iterator(array, iter.pos);
     }
     
     iterator erase(const iterator& itor)
     {
-        vectorSize--;
-        
-        memcpy(&array[itor.pos], &array[itor.pos+1], sizeof(T) * (vectorSize - itor.pos));
+        if (itor.pos > vectorSize-- / 2)
+        {
+            memmove(&array[itor.pos], &array[itor.pos+1], sizeof(T) * (vectorSize - itor.pos));
+        }
+        else
+        {
+            memmove(&array[1], array , sizeof(T) * (itor.pos));
+            
+            array = &array[1];
+        }
         
         return end();
     }
@@ -186,7 +215,7 @@ public:
         vectorCapacity = cap;
         T* newArr = new T[vectorCapacity];
 
-        memmove(newArr, array, sizeof(T) * vectorSize);
+        memcpy(newArr, array, sizeof(T) * vectorSize);
         
         delete[] array;
 
@@ -210,15 +239,12 @@ public:
     
     void assign(const iterator& startItor, const iterator& endItor)
     {
+        array = &startItor.array[startItor.pos];
         vectorSize = endItor.pos - startItor.pos;
-        
-        memcpy(array, &startItor.array[startItor.pos], sizeof(T) * vectorSize);
     }
     
     void assign(const size_t count, const int var)
     {
-        empty();
-        
         vectorSize = count;
         
         std::fill_n(array, vectorSize, var);
@@ -238,13 +264,6 @@ public:
     
     bool empty()
     {
-        if (vectorSize == 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return vectorSize == 0;
     }
 };
