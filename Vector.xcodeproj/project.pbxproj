@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		835B0B1B28ADD3FC0018369E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 835B0B1A28ADD3FC0018369E /* main.cpp */; };
-		835B0B2328ADD4320018369E /* MyVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 835B0B2128ADD4320018369E /* MyVector.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,8 +25,10 @@
 /* Begin PBXFileReference section */
 		835B0B1728ADD3FC0018369E /* Vector */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Vector; sourceTree = BUILT_PRODUCTS_DIR; };
 		835B0B1A28ADD3FC0018369E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		835B0B2128ADD4320018369E /* MyVector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MyVector.cpp; sourceTree = "<group>"; };
 		835B0B2228ADD4320018369E /* MyVector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyVector.h; sourceTree = "<group>"; };
+		83D188F928B3121D001F9DDD /* QuickSort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickSort.h; sourceTree = "<group>"; };
+		83D1890728B32BBE001F9DDD /* MyDoubleLinkedList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyDoubleLinkedList.h; sourceTree = "<group>"; };
+		83D1890928B32C34001F9DDD /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,8 +62,10 @@
 			isa = PBXGroup;
 			children = (
 				835B0B1A28ADD3FC0018369E /* main.cpp */,
-				835B0B2128ADD4320018369E /* MyVector.cpp */,
 				835B0B2228ADD4320018369E /* MyVector.h */,
+				83D188F928B3121D001F9DDD /* QuickSort.h */,
+				83D1890728B32BBE001F9DDD /* MyDoubleLinkedList.h */,
+				83D1890928B32C34001F9DDD /* Node.h */,
 			);
 			path = Vector;
 			sourceTree = "<group>";
@@ -124,7 +127,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				835B0B2328ADD4320018369E /* MyVector.cpp in Sources */,
 				835B0B1B28ADD3FC0018369E /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
