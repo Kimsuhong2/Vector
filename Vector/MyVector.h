@@ -44,15 +44,18 @@ public:
             return array[pos];
         }
         
-        bool operator==(const iterator& it)
+        /**
+         pos로 비교하지 않은 이유는
+         각각 다른 vector의 iterator들끼리 pos가 같을 수 있기 때문.
+         */
+        bool operator==(const iterator& iter)
         {
-            return &array[pos] == &it.array[it.pos];
+            return &array[pos] == &iter.array[iter.pos];
         }
         
-        bool operator!=(const iterator& it)
+        bool operator!=(const iterator& iter)
         {
-            bool result = &array[pos] != &it.array[it.pos];
-            return result;
+            return &array[pos] != &iter.array[iter.pos];
         }
     };
     
@@ -65,7 +68,8 @@ public:
     MyVector(size_t defaultCapacity = 0)
     : array(new T[defaultCapacity]), vectorSize(0), vectorCapacity(defaultCapacity) {}
     
-    MyVector(std::initializer_list<T> list) : array(new T[list.size()]), vectorSize(list.size()), vectorCapacity(list.size())
+    MyVector(std::initializer_list<T> list)
+    : array(new T[list.size()]), vectorSize(list.size()), vectorCapacity(list.size())
     {
         std::copy(list.begin(), list.end(), array);
     }
@@ -79,7 +83,7 @@ public:
     
     MyVector<T>& operator=(MyVector& target)
     {
-        if(this != &target)
+        if (this != &target)
         {
             MyVector temp(target);
             swap(temp);
@@ -111,17 +115,20 @@ public:
     
     T& front()
     {
+        assert(vectorSize != 0);
+        
         return array[0];
     }
     
     T& back()
     {
+        assert(vectorSize != 0);
+        
         return array[vectorSize-1];
     }
     
     void push_back(T var)
     {
-        
         if (vectorSize >= vectorCapacity)
         {
             vectorCapacity == 0 ? ++vectorCapacity : vectorCapacity *= 2;
@@ -159,7 +166,7 @@ public:
     
     iterator insert(const iterator& iter, std::initializer_list<T> list)
     {
-        if(vectorSize + list.size() > vectorCapacity)
+        if (vectorSize + list.size() > vectorCapacity)
         {
             reserve(vectorSize + list.size());
         }
@@ -207,7 +214,7 @@ public:
     
     void reserve(size_t cap)
     {
-        if(cap <= vectorCapacity)
+        if (cap <= vectorCapacity)
         {
             return;
         }
@@ -224,7 +231,7 @@ public:
     
     void resize(size_t newSize, T var = 0)
     {
-        if(newSize <= vectorSize)
+        if (newSize <= vectorSize)
         {
             vectorSize = newSize;
             return;

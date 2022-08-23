@@ -6,7 +6,7 @@
 template <typename T>
 void print(T arr[], size_t size)
 {
-    for(int i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
         std::cout << arr[i] << " ";
     }
@@ -23,24 +23,24 @@ void QuickSort(T* arr, int start, int end)
 
     while (leftIter < rightIter)
     {
-        while(arr[leftIter] < pivot)
+        while (arr[leftIter] < pivot)
         {
             leftIter++;
         }
 
-        while(arr[rightIter] > pivot)
+        while (arr[rightIter] > pivot)
         {
             rightIter--;
         }
         
-        if(leftIter == rightIter)
+        if (leftIter == rightIter)
         {
             leftIter++;
             rightIter--;
             continue;
         }
         
-        if(leftIter < rightIter)
+        if (leftIter < rightIter)
         {
             std::swap(arr[leftIter++], arr[rightIter--]);
         }

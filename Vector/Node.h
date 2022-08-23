@@ -12,20 +12,4 @@ public:
     
 public:
     Node(T var) : data(var), next(nullptr), prev(nullptr){}
-
-public:
-    void setNext(Node* next)
-    {
-        this->next = next;
-    }
-    
-    void setPrev(Node* prev)
-    {
-        this->prev = prev;
-    }
-    
-    T getData()
-    {
-        return data;
-    }
 };
