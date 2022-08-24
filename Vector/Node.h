@@ -12,4 +12,9 @@ public:
     
 public:
     Node(T var) : data(var), next(nullptr), prev(nullptr){}
+    ~Node()
+    {
+        delete next;
+        delete prev;
+    }
 };

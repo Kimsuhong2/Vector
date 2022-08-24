@@ -13,19 +13,18 @@ public:
         friend class MyDoubleLinkedList;
         Node<T>* target;
         Node<T>* prev;
-        Node<T>* next;
 
     public:
-        iterator(Node<T>* ptr, Node<T>* prevNode = nullptr) : target(ptr), prev(prevNode) {}
-        ~iterator(){}
+        iterator(Node<T>* ptr = nullptr, Node<T>* prevNode = nullptr) : target(ptr), prev(prevNode) {}
+        ~iterator()
+        {
+            delete target;
+            delete prev;
+        }
 
         iterator& operator++()
         {
-            if (target == nullptr)
-            {
-                target = next;
-            }
-            else
+            if (target != nullptr)
             {
                 prev = target;
                 target = target->next;
@@ -40,28 +39,27 @@ public:
             {
                 target = prev;
             }
-            else
+            else if (target->prev != nullptr)
             {
-                next = target;
                 target = target->prev;
             }
-
+            
             return *this;
         }
 
-        T operator*()
+        T& operator*()
         {
             return target->data;
         }
 
-        bool operator==(const iterator it)
+        bool operator==(const iterator iter)
         {
-            return target == it.target;
+            return target == iter.target && prev == iter.prev;
         }
 
-        bool operator!=(const iterator& it)
+        bool operator!=(const iterator& iter)
         {
-            return target != it.target;
+            return target != iter.target && prev != iter.prev;
         }
     };
 
@@ -72,15 +70,19 @@ private:
 public:
     MyDoubleLinkedList() : head(nullptr), tail(nullptr), listSize(0) {}
     MyDoubleLinkedList(T var) : head(new Node<T>(var)), tail(head), listSize(1) {}
-    MyDoubleLinkedList(std::initializer_list<T> datas) : head(nullptr), tail(nullptr), listSize(0)
+    MyDoubleLinkedList(std::initializer_list<T> data) : head(nullptr), tail(nullptr), listSize(0)
     {
-        typename std::initializer_list<T>::iterator iter = datas.begin();
+        typename std::initializer_list<T>::iterator iter = data.begin();
 
-        while (iter != datas.end())
+        while (iter != data.end())
         {
             push_back(*iter);
             iter++;
         }
+    }
+    ~MyDoubleLinkedList()
+    {
+        clear();
     }
 
 private:
@@ -117,18 +119,17 @@ public:
         if (listSize == 0)
             return;
         
-        if (listSize > 1)
+        Node<T>* prevHead;
+        
+        while (head != nullptr)
         {
-            while (listSize > 1)
-            {
-                pop_front();
-            }
+            prevHead = head;
+            head = head->next;
+            delete prevHead;
         }
         
-        delete tail;
-        
-        head = nullptr;
         tail = nullptr;
+        
         listSize = 0;
     }
 
@@ -152,14 +153,14 @@ public:
         return iterator(tail->next, tail);
     }
 
-    T front()
+    T& front()
     {
         assert(listSize != 0);
         
         return head->data;
     }
 
-    T back()
+    T& back()
     {
         assert(listSize != 0);
         
@@ -204,46 +205,54 @@ public:
 
     void pop_front()
     {
-        if (listSize == 1)
+        assert(listSize >= 1);
+        
+        Node<T>* prevHead = head;
+        
+        if(head->next != nullptr)
         {
-            clear();
-            return;
+            head = head->next;
+            head->prev = nullptr;
         }
-
-        head = head->next;
-        delete head->prev;
-        head->prev = nullptr;
+        else
+        {
+            head = tail = nullptr;
+        }
+        
+        delete prevHead;
         listSize--;
     }
 
     void pop_back()
     {
-        if (listSize == 1)
+        assert(listSize >= 1);
+        
+        Node<T>* prevTail = tail;
+        
+        if(prevTail->prev != nullptr)
         {
-            clear();
-            return;
+            tail = tail->prev;
+            tail->next = nullptr;
         }
-
-        tail = tail->prev;
-        delete tail->next;
-        tail->next = nullptr;
+        else
+        {
+            head = tail = nullptr;
+        }
+        
+        delete prevTail;
         listSize--;
     }
 
-    iterator insert(iterator iter, std::initializer_list<T> datas)
+    iterator insert(iterator iter, std::initializer_list<T> data)
     {
-        typename std::initializer_list<T>::iterator initializerIter = datas.end();
+        typename std::initializer_list<T>::iterator initializerIter = data.end();
 
-        while (true)
+        do
         {
             --initializerIter;
             iter = insert(iter, *initializerIter);
 
-            if (initializerIter == datas.begin())
-            {
-                break;
-            }
-        }
+        } while (initializerIter != data.begin());
 
         return iter;
     }
@@ -285,9 +294,13 @@ public:
             iter = end();
             return --iter;
         }
+        
+        Node<T>* prevNode = iter.target;
 
         linkNode(iter.target->prev, iter.target->next);
         iter.target = iter.target->next;
+        
+        delete prevNode;
         listSize--;
         return iter;
     }
@@ -325,7 +338,9 @@ public:
     void resize(size_t newSize)
     {
         if(listSize == newSize)
+        {
             return;
+        }
 
         if (listSize < newSize)
         {

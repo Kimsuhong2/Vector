@@ -37,14 +37,13 @@ void QuickSort(T* arr, int start, int end)
         {
             leftIter++;
             rightIter--;
-            continue;
+            break;
         }
         
         if (leftIter < rightIter)
         {
             std::swap(arr[leftIter++], arr[rightIter--]);
         }
-        print(arr, 14);
     }
 
     if (start < rightIter)

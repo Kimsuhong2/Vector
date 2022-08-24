@@ -1,13 +1,13 @@
-
-#include "main.h"
-
 #include <iostream>
 #include <vector>
 #include <list>
 #include <iterator>
+#include <set>
+#include "main.h"
 #include "MyVector.h"
 #include "QuickSort.h"
 #include "MyDoubleLinkedList.h"
+#include "MyCompleteBinaryTree.h"
 
 using namespace std;
 
@@ -39,4 +39,5 @@ void print(MyDoubleLinkedList<T> li)
 
 int main(int argc, const char* argv[])
 {
+    MyCompleteBinaryTree<int> test (1);
 }

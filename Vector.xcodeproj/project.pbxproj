@@ -23,6 +23,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		835A98C828B5B9D900240B78 /* MyCompleteBinaryTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCompleteBinaryTree.h; sourceTree = "<group>"; };
+		835A98CE28B6215700240B78 /* TreeNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TreeNode.h; sourceTree = "<group>"; };
 		835B0B1728ADD3FC0018369E /* Vector */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Vector; sourceTree = BUILT_PRODUCTS_DIR; };
 		835B0B1A28ADD3FC0018369E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		835B0B2228ADD4320018369E /* MyVector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyVector.h; sourceTree = "<group>"; };
@@ -68,6 +70,8 @@
 				83D188F928B3121D001F9DDD /* QuickSort.h */,
 				83D1890728B32BBE001F9DDD /* MyDoubleLinkedList.h */,
 				83D1890928B32C34001F9DDD /* Node.h */,
+				835A98C828B5B9D900240B78 /* MyCompleteBinaryTree.h */,
+				835A98CE28B6215700240B78 /* TreeNode.h */,
 			);
 			path = Vector;
 			sourceTree = "<group>";

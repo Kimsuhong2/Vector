@@ -15,7 +15,10 @@ public:
         
     public:
         iterator(T* ptr = nullptr, size_t index = 0) : array(ptr), pos(index) {}
-        ~iterator(){}
+        ~iterator()
+        {
+            delete array;
+        }
         
         iterator& operator++()
         {
@@ -74,7 +77,10 @@ public:
         std::copy(list.begin(), list.end(), array);
     }
     
-    ~MyVector(){}
+    ~MyVector()
+    {
+        delete[] array;
+    }
     
     T& operator[](size_t pos)
     {
@@ -179,6 +185,11 @@ public:
         return iterator(array, iter.pos);
     }
     
+    /**
+     memmove와 memcpy는 같은 기능
+     memmove는 복사하고자 하는 부분은 buffer에 올렸다가, buffer의 값을 원하는 위치에 복사시킴.
+     memcpy는 buffer에 올리지 않고 바로 복사.
+     */
     iterator insert(const iterator& iter, const iterator& startIter, const iterator& endIter)
     {
         size_t insertSize = endIter.pos - startIter.pos;
@@ -190,25 +201,25 @@ public:
         
         memmove(&array[iter.pos + insertSize], &array[iter.pos], sizeof(T) * (vectorSize - iter.pos));
         memmove(&array[iter.pos], startIter.array, sizeof(T) * insertSize);
+//        memcpy(&array[iter.pos], startIter.array, sizeof(T) * insertSize);
         
         vectorSize += insertSize;
         
         return iterator(array, iter.pos);
     }
     
-    iterator erase(const iterator& itor)
+    /**
+     삭제하고자 하는 iterator가 vector 내부인지 확인 후
+     vector 내부이면 삭제
+     */
+    iterator erase(iterator iter)
     {
-        if (itor.pos > vectorSize-- / 2)
-        {
-            memmove(&array[itor.pos], &array[itor.pos+1], sizeof(T) * (vectorSize - itor.pos));
-        }
-        else
-        {
-            memmove(&array[1], array , sizeof(T) * (itor.pos));
-            
-            array = &array[1];
-        }
+        assert(iter.pos >= 0 && iter.pos < vectorSize);
         
+        memmove(&array[iter.pos], &array[iter.pos+1], sizeof(T) * (vectorSize - iter.pos - 1));
+        
+        vectorSize--;
+       
         return end();
     }
     
