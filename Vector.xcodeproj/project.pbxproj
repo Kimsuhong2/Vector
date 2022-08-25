@@ -28,6 +28,7 @@
 		835B0B1728ADD3FC0018369E /* Vector */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Vector; sourceTree = BUILT_PRODUCTS_DIR; };
 		835B0B1A28ADD3FC0018369E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		835B0B2228ADD4320018369E /* MyVector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyVector.h; sourceTree = "<group>"; };
+		837DF91228B75C5A002DA6EA /* MyBinarySearchTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyBinarySearchTree.h; sourceTree = "<group>"; };
 		83B93B5328B4C03C00E7C25A /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		83D188F928B3121D001F9DDD /* QuickSort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickSort.h; sourceTree = "<group>"; };
 		83D1890728B32BBE001F9DDD /* MyDoubleLinkedList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyDoubleLinkedList.h; sourceTree = "<group>"; };
@@ -72,6 +73,7 @@
 				83D1890928B32C34001F9DDD /* Node.h */,
 				835A98C828B5B9D900240B78 /* MyCompleteBinaryTree.h */,
 				835A98CE28B6215700240B78 /* TreeNode.h */,
+				837DF91228B75C5A002DA6EA /* MyBinarySearchTree.h */,
 			);
 			path = Vector;
 			sourceTree = "<group>";

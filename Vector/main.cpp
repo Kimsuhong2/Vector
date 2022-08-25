@@ -8,36 +8,47 @@
 #include "QuickSort.h"
 #include "MyDoubleLinkedList.h"
 #include "MyCompleteBinaryTree.h"
+#include "MyBinarySearchTree.h"
 
 using namespace std;
 
-template <typename T>
-void print(list<T> li)
-{
-    typename list<T>::iterator iter = li.begin();
-    
-    while (iter != li.end())
-    {
-        cout << *iter << endl;
-        
-        iter++;
-    }
-}
-
-template <typename T>
-void print(MyDoubleLinkedList<T> li)
-{
-    typename MyDoubleLinkedList<T>::iterator iter = li.begin();
-    
-    while (iter != li.end())
-    {
-        cout << *iter << endl;
-        
-        ++iter;
-    }
-}
-
 int main(int argc, const char* argv[])
 {
-    MyCompleteBinaryTree<int> test (1);
+    MyBinarySearchTree<int> test;
+    
+//    test.insert(5);
+//    test.insert(3);
+//    test.insert(4);
+//    test.insert(2);
+//    test.insert(1);
+    
+    test.erase(2);
+    
+    
+//    MyCompleteBinaryTree<int> test;
+//
+//    for(int i = 1; i < 30; i++)
+//    {
+//        test.push_back(i);
+//    }
+//
+//    test.printTree();
+//
+//    test.erase(2);
+//
+//    cout << endl;
+//    test.printTree();
+//
+//    test.setTraversalOrder(test.PREORDER);
+//    test.printWithTraversalOrder();
+//
+//    test.setTraversalOrder(test.INORDER);
+//    test.printWithTraversalOrder();
+//
+//    test.setTraversalOrder(test.POSTORDER);
+//    test.printWithTraversalOrder();
+//
+//    test.clear();
+//
+//    cout << test.size() << endl;
 }

@@ -1,5 +1,6 @@
 #pragma once
-#incldue <iostream>
+#include <iostream>
+
 template <typename T>
 class TreeNode
 {
@@ -13,7 +14,14 @@ public:
 
     ~TreeNode()
     {
-        delete left;
-        delete right;
+        if(left != nullptr)
+        {
+            delete left;
+        }
+        
+        if(right!=nullptr)
+        {
+            delete right;
+        }
     }
-}
+};

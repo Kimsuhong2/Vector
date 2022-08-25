@@ -17,7 +17,6 @@ public:
         iterator(T* ptr = nullptr, size_t index = 0) : array(ptr), pos(index) {}
         ~iterator()
         {
-            delete array;
         }
         
         iterator& operator++()
