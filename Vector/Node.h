@@ -14,6 +14,9 @@ public:
     Node(T var) : data(var), next(nullptr), prev(nullptr){}
     ~Node()
     {
-        delete this;
+        next = nullptr;
+        prev = nullptr;
+        delete next;
+        delete prev;
     }
 };

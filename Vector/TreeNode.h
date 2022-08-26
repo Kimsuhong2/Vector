@@ -14,14 +14,8 @@ public:
 
     ~TreeNode()
     {
-        if(left != nullptr)
-        {
-            delete left;
-        }
-        
-        if(right!=nullptr)
-        {
-            delete right;
-        }
+        left = right = nullptr;
+        delete left;
+        delete right;
     }
 };

@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <queue>
 #include "MyVector.h"
 #include "TreeNode.h"
 
@@ -17,22 +18,24 @@ private:
     
 public:
     MyCompleteBinaryTree() : treeSize(0){}
-    ~MyCompleteBinaryTree()
-    {
-    }
+    ~MyCompleteBinaryTree(){}
     
 private:
-    void linkWithParentNode(TreeNode<T>* childNode, size_t index)
+    
+    /**
+    child node와, child node의 index를 받아, 부모의 자식으로 연결시켜 줌.
+     */
+    void linkWithParentNode(TreeNode<T>* childNode, size_t childIndex)
     {
-        if(index == 0)
+        if(childIndex == 0)
             return;
         
-        size_t parentIndex = (index - 1) / 2;
+        size_t parentIndex = (childIndex - 1) / 2;
         
-        if (index % 2 == 0)
-            tree[parentIndex]->right = tree[index];
+        if (childIndex % 2 == 0)
+            tree[parentIndex]->right = childNode;
         else
-            tree[parentIndex]->left = tree[index];
+            tree[parentIndex]->left = childNode;
     }
     
     /**
@@ -43,12 +46,12 @@ private:
      */
     void preOrder(TreeNode<T>* node)
     {
-        if (node != nullptr)
-        {
-            cout << node->data << " ";
-            preOrder(node->left);
-            preOrder(node->right);
-        }
+        if (node == nullptr)
+            return;
+        
+        cout << node->data << " ";
+        preOrder(node->left);
+        preOrder(node->right);
     }
     
     /**
@@ -110,10 +113,10 @@ public:
     
     void clear()
     {
-        for(int i = 0; i < treeSize; i++)
+        for(size_t i = treeSize-1; i >= 0; --i)
         {
-            tree[i]->left = tree[i]->right = nullptr;
             delete tree[i];
+            tree.pop_back();
         }
         
         treeSize = 0;
@@ -129,7 +132,6 @@ public:
     1의 부모는 0,   (1 - 1)  /  2  =  0    (O)
     2의 부모는 0,   (2 - 1)  /  2  =  0    (O)
     5의 부모는 2,   (5 - 1)  /  2  =  2    (O)
-     
     또한 인덱스가 홀수인 노드는 부모의 왼쪽에, 인덱스가 짝수인 노드는 부모의 오른쪽에 위치함.
      */
     void push_back(T val)
@@ -137,7 +139,6 @@ public:
         TreeNode<T>* newNode = new TreeNode<T>(val);
         
         tree.push_back(newNode);
-        
       
         linkWithParentNode(tree[treeSize], treeSize);
         
@@ -159,9 +160,14 @@ public:
         tree.pop_back();
         delete treeNode;
         
-        linkWithParentNode(nullptr, --treeSize);
+        --treeSize;
+        linkWithParentNode(nullptr, treeSize);
     }
     
+    /**
+     vector의 insert를 통해 원하는 위치에 값을 넣어주고
+     해당 위치부터 마지막 위치까지의 노드들을 새로 배치함.
+     */
     void insert(int index, T val)
     {
         if (index >= treeSize)
@@ -200,6 +206,7 @@ public:
             tree[i]->left = tree[i]->right = nullptr;
             linkWithParentNode(tree[i], i);
         }
+        linkWithParentNode(nullptr, treeSize);
         
         targetNode->left = targetNode->right = nullptr;
         delete targetNode;
@@ -218,26 +225,77 @@ public:
      */
     void printWithTraversalOrder()
     {
-        switch (order)
+        if (treeSize != 0)
         {
-            case PREORDER:
-                preOrder(tree.front());
-                break;
-            case INORDER:
-                inOrder(tree.front());
-                break;
-            case POSTORDER:
-                postOrder(tree.front());
-                break;
-            default:
-                break;
+            switch (order)
+            {
+                case PREORDER:
+                    preOrder(tree.front());
+                    break;
+                case INORDER:
+                    inOrder(tree.front());
+                    break;
+                case POSTORDER:
+                    postOrder(tree.front());
+                    break;
+                default:
+                    break;
+            }
         }
         cout << endl;
     }
     
     void printTree()
     {
-        treeOrder(tree.front(), 0);
+        if (treeSize != 0)
+            treeOrder(tree.front(), 0);
         cout << endl;
     }
 };
+
+
+
+/**
+ insert by bfs
+ */
+//void insert(T val)
+//{
+//    if (treeSize == 0)
+//    {
+//        push_back(val);
+//        return;
+//    }
+//
+//    queue<TreeNode<T>**> q;
+//    q.push(&tree[0]);
+//    TreeNode<T>* newNode = new TreeNode<T>(val);
+//
+//    while(!q.empty())
+//    {
+//        TreeNode<T>** temp;
+//        temp = q.front();
+//        q.pop();
+//
+//        if((*temp)->left != nullptr)
+//        {
+//            q.push(&(*temp)->left);
+//        }
+//        else
+//        {
+//            (*temp)->left = newNode;
+//            ++treeSize;
+//            break;
+//        }
+//
+//        if((*temp)->right != nullptr)
+//        {
+//            q.push(&(*temp)->right);
+//        }
+//        else
+//        {
+//            (*temp)->right = newNode;
+//            ++treeSize;
+//            break;
+//        }
+//    }
+//}
