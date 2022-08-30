@@ -149,27 +149,72 @@ public:
     bool insert(T val)
     {
         TreeNode<T>* newNode = new TreeNode<T>(val);
-        TreeNode<T>** currentNode = &root;
+        TreeNode<T>* currentNode = root;
         
-        while(*currentNode != nullptr)
+        if (currentNode == nullptr)
         {
-            if (val == (*currentNode)->data)
-            {
+            root = newNode;
+            ++treeSize;
+            return true;
+        }
+        
+        while (currentNode != nullptr)
+        {
+            if (currentNode->data == val)
                 return false;
-            }
-            else if (val > (*currentNode)->data)
+            
+            if (currentNode->data > val)
             {
-                currentNode = &((*currentNode)->right);
+                if (currentNode->left == nullptr)
+                {
+                    currentNode->left = newNode;
+                    break;
+                }
+                else
+                {
+                    currentNode = currentNode->left;
+                    
+                }
             }
             else
             {
-                currentNode = &((*currentNode)->left);
+                if (currentNode->right == nullptr)
+                {
+                    currentNode->right = newNode;
+                    break;
+                }
+                else
+                {
+                    currentNode = currentNode->right;
+                }
             }
         }
         
-        *currentNode = newNode;
-        treeSize++;
+        ++treeSize;
         return true;
+        
+//        TreeNode<T>* newNode = new TreeNode<T>(val);
+//        TreeNode<T>** currentNode = &root;
+//
+//        while(*currentNode != nullptr)
+//        {
+//            if (val == (*currentNode)->data)
+//            {
+//                return false;
+//            }
+//            else if (val > (*currentNode)->data)
+//            {
+//                currentNode = &((*currentNode)->right);
+//            }
+//            else
+//            {
+//                currentNode = &((*currentNode)->left);
+//            }
+//        }
+//
+//        *currentNode = newNode;
+//        ++treeSize;
+//        return true;
     }
     
     bool search(T val)
