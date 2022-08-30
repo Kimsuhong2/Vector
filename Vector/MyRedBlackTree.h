@@ -158,14 +158,14 @@ public:
         TreeNode<T>* leftChild = node->left;
         node->left = leftChild->right;
         
-        if (leftChild->left != nullptr)
+        if (leftChild->left != nilNode)
         {
             node->left->parent = node;
         }
         
         leftChild->parent = node->parent;
         
-        if (leftChild->parent == nullptr)
+        if (leftChild->parent == nilNode)
         {
             root = leftChild;
         }
@@ -238,6 +238,8 @@ public:
         }
         
         insertFixUp(newNode);
+        nilNode->left = root;
+        nilNode->right = root;
         ++treeSize;
         return true;
     }
@@ -253,7 +255,7 @@ public:
         while (node != root && node->parent->color == COLOR::RED)
         {
             TreeNode<T>* grandparent = node->parent->parent;
-            bool isLeftChild = node->parent == grandparent->left? true : false;
+            bool isLeftChild = node->parent == grandparent->left;
             TreeNode<T>* uncle = isLeftChild ? grandparent->right : grandparent->left;
             
             /**
@@ -319,6 +321,7 @@ public:
         }
         
         TreeNode<T>* currentNode = root;
+        TreeNode<T>* newChild;
         
         while (currentNode != nilNode)
         {
@@ -332,17 +335,12 @@ public:
             }
             else
             {
-                TreeNode<T>* newChild;
                 COLOR orignalColor;
                 /**
                  삭제될 노드의 자식이 1개 이하일 때
                  */
                 if (currentNode->left == nilNode)
                 {
-                    if (currentNode->data == 30);
-                    {
-                        cout << " ";
-                    }
                     newChild = currentNode->right;
                     transPlant(currentNode, newChild);
                     currentNode = newChild;
@@ -360,33 +358,36 @@ public:
                 else
                 {
                     TreeNode<T>* minNode = findMinNode(currentNode->right);
-                    currentNode->data = minNode->data;
-                    currentNode->color = minNode->color;
+                    orignalColor = minNode->color;
+                    newChild = minNode->right;
                     
-                    if (minNode->parent->left == minNode)
+                    if (minNode->parent == currentNode)
                     {
-                        minNode->parent->left = nilNode;
+                        newChild->parent = minNode;
                     }
                     else
                     {
-                        minNode->parent->right = nilNode;
+                        transPlant(minNode, minNode->right);
+                        minNode->right = currentNode->right;
+                        minNode->right->parent = minNode;
                     }
+                    transPlant(currentNode, minNode);
+                    minNode->left = currentNode->left;
+                    minNode->left->parent = minNode;
+                    minNode->color = currentNode->color;
                 }
-                
+                delete currentNode;
                 /**
                     삭제된 노드의 위치를 대신하는 노드의 색깔을 검정색으로 칠해준다.
                     대신 하는 노드의 색깔이 빨강 → 검정이면 아무것도 하지 않아도 됨.
                     대신 하는 노드의 색깔이 검정 → 검정이면 이중 흑색 노드가 됨.
                     이중 흑색 노드는 노드들을 재배치 해주어야 함.
                  */
-                orignalColor = currentNode->color;
-                currentNode->color = COLOR::BLACK;
-
                 if (orignalColor == COLOR::BLACK)
                 {
-                    eraseFixUp(currentNode);
+                    
+                    eraseFixUp(newChild);
                 }
-                
                 --treeSize;
                 
                 return true;

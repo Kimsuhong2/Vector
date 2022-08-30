@@ -17,7 +17,7 @@ int main(int argc, const char* argv[])
 {
     
     MyRedBlackTree<int> rbt;
-    
+
     int key;
     int value;
     while (true)
