@@ -18,8 +18,11 @@ public:
 
     ~TreeNode()
     {
-        left = right = nullptr;
-        delete left;
-        delete right;
+//        left = right = nullptr;
+        if(left != nullptr)
+            delete left;
+        
+        if(right != nullptr)
+            delete right;
     }
 };

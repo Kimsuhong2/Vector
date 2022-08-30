@@ -113,11 +113,7 @@ public:
     
     void clear()
     {
-        for(size_t i = treeSize-1; i >= 0; --i)
-        {
-            delete tree[i];
-            tree.pop_back();
-        }
+        delete tree[0];
         
         treeSize = 0;
     }

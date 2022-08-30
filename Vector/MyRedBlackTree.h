@@ -3,10 +3,12 @@
 #include "TreeNode.h"
 
 /**
- 1. Root Property      : 루트노드의 색깔은 항상 검정(black)이다.
- 2. External Property : 모든 external node들은 검정(black)이다.
- 3. Internal Property  : 빨강노드의 자식은 검정이다 == 빨강색 노드가 연속으로 나올 수 없다.
- 4. Depth Property : 모든 리프노드에서 Black Depth는 같다. == 리프노드에서 루트노드까지 가는 경로에서 만나는 블랙노드의 개수는 같다.
+ Red - Black Tree ( 자가 균형 이진 탐색 트리 )
+ 
+ 1. Root Property      :  루트노드의 색깔은 항상 검정(black)이다.
+ 2. External Property :  모든 리프(NIL)들은 검정(black)이다.
+ 3. Internal Property  :  빨강노드의 자식은 검정이다 == 빨강색 노드가 연속으로 나올 수 없다.
+ 4. Depth Property    :  모든 리프노드에서 Black Depth는 같다. == 리프노드에서 루트노드까지 가는 경로에서 만나는 블랙노드의 개수는 같다.
  */
 template <typename T>
 class MyRedBlackTree
@@ -20,30 +22,13 @@ public:
     MyRedBlackTree() : root(nullptr), nilNode(new TreeNode<T>(0)), treeSize(0)
     {
         nilNode->color = COLOR::BLACK;
-        nilNode->left = root;
-        nilNode->right = root;
     }
     ~MyRedBlackTree()
     {
-        delete root;
         delete nilNode;
     }
     
 private:
-    /**
-     재귀를 활용해 해당 노드가 있는지 찾아 줌.
-     */
-    TreeNode<T>* searchNode(TreeNode<T>* currentNode, T val)
-    {
-        if (currentNode == nullptr || currentNode->data == val)
-            return currentNode;
-        
-        if (currentNode->data > val)
-            return searchNode(currentNode->left, val);
-        else
-            return searchNode(currentNode->right, val);
-    }
-    
     /**
         parent대신 child를 조부모와 연결시켜주는 함수.
         parent가 grandparent의 왼쪽자식일 경우, grandparent의 왼쪽자식으로 child를 연결.
@@ -190,6 +175,7 @@ public:
         TreeNode<T>* newNode = new TreeNode<T>(val);
         newNode->left = nilNode;
         newNode->right = nilNode;
+        
         TreeNode<T>* currentNode = root;
         
         /**
@@ -198,7 +184,6 @@ public:
         if (treeSize == 0)
         {
             root = newNode;
-            nilNode->left = nilNode->right = root;
             root->parent = nilNode;
         }
         else
@@ -238,8 +223,6 @@ public:
         }
         
         insertFixUp(newNode);
-        nilNode->left = root;
-        nilNode->right = root;
         ++treeSize;
         return true;
     }
@@ -376,6 +359,7 @@ public:
                     minNode->left->parent = minNode;
                     minNode->color = currentNode->color;
                 }
+                currentNode->left = currentNode->right = nullptr;
                 delete currentNode;
                 /**
                     삭제된 노드의 위치를 대신하는 노드의 색깔을 검정색으로 칠해준다.
@@ -385,7 +369,6 @@ public:
                  */
                 if (orignalColor == COLOR::BLACK)
                 {
-                    
                     eraseFixUp(newChild);
                 }
                 --treeSize;

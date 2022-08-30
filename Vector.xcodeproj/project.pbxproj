@@ -33,6 +33,7 @@
 		83D188F928B3121D001F9DDD /* QuickSort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickSort.h; sourceTree = "<group>"; };
 		83D1890728B32BBE001F9DDD /* MyDoubleLinkedList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyDoubleLinkedList.h; sourceTree = "<group>"; };
 		83D1890928B32C34001F9DDD /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
+		83DB5B2C28BDCF4000F6DA7E /* MyHeapTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyHeapTree.h; sourceTree = "<group>"; };
 		83E05B5428BC4759004476B9 /* MyRedBlackTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyRedBlackTree.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,6 +77,7 @@
 				835A98CE28B6215700240B78 /* TreeNode.h */,
 				837DF91228B75C5A002DA6EA /* MyBinarySearchTree.h */,
 				83E05B5428BC4759004476B9 /* MyRedBlackTree.h */,
+				83DB5B2C28BDCF4000F6DA7E /* MyHeapTree.h */,
 			);
 			path = Vector;
 			sourceTree = "<group>";

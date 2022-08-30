@@ -60,12 +60,14 @@ private:
             {
                 TreeNode<T>* temp = rootNode;
                 rootNode = temp->right;
+                temp->right = nullptr;
                 delete temp;
             }
             else if (rootNode->right == nullptr)
             {
                 TreeNode<T>* temp = rootNode;
                 rootNode = temp->left;
+                temp->left = nullptr;
                 delete temp;
             }
             else
@@ -173,7 +175,6 @@ public:
                 else
                 {
                     currentNode = currentNode->left;
-                    
                 }
             }
             else
