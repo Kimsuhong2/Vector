@@ -202,7 +202,6 @@ public:
             tree[i]->left = tree[i]->right = nullptr;
             linkWithParentNode(tree[i], i);
         }
-        linkWithParentNode(nullptr, treeSize);
         
         targetNode->left = targetNode->right = nullptr;
         delete targetNode;

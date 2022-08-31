@@ -20,7 +20,10 @@ private:
 public:
     MyHeapTree()
     : treeSize(0), order(TraversalOrder::PREORDER), type(HeapType::MinHeap){}
-    ~MyHeapTree(){}
+    ~MyHeapTree()
+    {
+        clear();
+    }
     
 private:
     
@@ -117,27 +120,30 @@ private:
      */
     void insertRebuild(size_t index)
     {
-        while (index != 0)
+        switch (type)
         {
-            size_t parentIndex = (index - 1) / 2;
-            switch (type)
-            {
-                case HeapType::MaxHeap:
+            case HeapType::MaxHeap:
+                while (index != 0)
+                {
+                    size_t parentIndex = (index - 1) / 2;
+                    
                     if (tree[index]->data > tree[parentIndex]->data)
                         swap(tree[index]->data, tree[parentIndex]->data);
                     else
-                        return;
-                    break;
+                        break;
+                }
+                break;
+            case HeapType::MinHeap:
+                while (index != 0)
+                {
+                    size_t parentIndex = (index - 1) / 2;
                     
-                case HeapType::MinHeap:
                     if (tree[index]->data < tree[parentIndex]->data)
                         swap(tree[index]->data, tree[parentIndex]->data);
                     else
-                        return;
-                    break;
-            }
-            
-            index = parentIndex;
+                        break;
+                }
+                break;
         }
     }
     
@@ -158,7 +164,37 @@ private:
     {
         size_t currentIndex = 0;
         
-        while ((currentIndex * 2 + 1) < (treeSize - 1))
+        switch (type)
+        {
+            case HeapType::MaxHeap:
+                while (currentIndex * 2 + 1 <= treeSize - 1)
+                {
+                    size_t priorChildIndex = getPriorChildIndex(currentIndex);
+                    // 우선순위가 높은 자식노드와 값을 비교해서, 자식의 값이 자신의 값보다 크면 swap;
+                    if (tree[currentIndex]->data < tree[priorChildIndex]->data)
+                        swap(tree[currentIndex]->data, tree[priorChildIndex]->data);
+                    else
+                        break;
+                    
+                    currentIndex = priorChildIndex;
+                }
+                break;
+            case HeapType::MinHeap:
+                while (currentIndex * 2 + 1 <= treeSize - 1)
+                {
+                    size_t priorChildIndex = getPriorChildIndex(currentIndex);
+                    // 우선순위가 높은 자식노드와 값을 비교해서, 자식의 값이 자신의 값보다 크면 swap;
+                    if (tree[currentIndex]->data > tree[priorChildIndex]->data)
+                        swap(tree[currentIndex]->data, tree[priorChildIndex]->data);
+                    else
+                        break;
+                    
+                    currentIndex = priorChildIndex;
+                }
+                break;
+        }
+        
+        while ((currentIndex * 2 + 1) <= (treeSize - 1))
         {
             size_t priorChildIndex = getPriorChildIndex(currentIndex);
             
@@ -217,7 +253,7 @@ private:
                 break;
                 
             case HeapType::MinHeap:
-                if (tree[leftChildIndex] == nullptr || tree[leftChildIndex]->data < tree[rightChildIndex]->data)
+                if (tree[rightChildIndex] == nullptr || tree[leftChildIndex]->data < tree[rightChildIndex]->data)
                     return leftChildIndex;
                 else
                     return rightChildIndex;
@@ -238,11 +274,8 @@ public:
     
     void clear()
     {
-        for(size_t i = treeSize-1; i >= 0; --i)
-        {
-            delete tree[i];
-            tree.pop_back();
-        }
+        if (treeSize > 0)
+            delete tree.front();
         
         treeSize = 0;
     }
@@ -281,7 +314,11 @@ public:
         
         swap(tree[0]->data, tree[treeSize]->data);
         linkWithParentNode(nullptr, treeSize);
-        delete tree[treeSize];
+        
+        TreeNode<T>* lastNode = tree.back();
+        tree.pop_back();
+        delete lastNode;
+        
         eraseReBuild();
     }
     

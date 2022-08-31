@@ -157,8 +157,8 @@ void BSTTestCase()
 void RBTTestCase()
 {
     MyRedBlackTree<int> rbt;
-
-    for(int i = 0; i < 100; i++)
+    
+    for(int i = 0; i < 50; ++i)
     {
         rbt.insert(i);
     }

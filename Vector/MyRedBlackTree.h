@@ -25,6 +25,7 @@ public:
     }
     ~MyRedBlackTree()
     {
+        delete root;
         delete nilNode;
     }
     
@@ -318,7 +319,7 @@ public:
             }
             else
             {
-                COLOR orignalColor;
+                COLOR orignalColor = currentNode->color;
                 /**
                  삭제될 노드의 자식이 1개 이하일 때
                  */
@@ -326,13 +327,11 @@ public:
                 {
                     newChild = currentNode->right;
                     transPlant(currentNode, newChild);
-                    currentNode = newChild;
                 }
                 else if (currentNode->right == nilNode)
                 {
                     newChild = currentNode->left;
                     transPlant(currentNode, newChild);
-                    currentNode = newChild;
                 }
                 /**
                 삭제될 노드의 자식이 2개일 때
@@ -354,6 +353,7 @@ public:
                         minNode->right = currentNode->right;
                         minNode->right->parent = minNode;
                     }
+                    
                     transPlant(currentNode, minNode);
                     minNode->left = currentNode->left;
                     minNode->left->parent = minNode;
@@ -435,6 +435,7 @@ public:
                         step 2. 형제의 왼쪽 자식의 색깔을 검정색으로 바꾼다.
                         step 3. 형제를 기준으로 오른쪽 회전을 적용한다.
                         step 4. 새로운 형제를 지정해준다.
+                            ↑case 4로 만들어줌.
                      */
                     if (brother->right->color == COLOR::BLACK)
                     {
