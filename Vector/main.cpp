@@ -11,17 +11,25 @@
 #include "MyBinarySearchTree.h"
 #include "MyRedBlackTree.h"
 #include "MyHeapTree.h"
+#include "CountingSort.h"
 
 using namespace std;
 
 void CBTTestCase();
 void BSTTestCase();
 void RBTTestCase();
-void HTTestCaes();
+void HTTestCase();
 
 int main(int argc, const char* argv[])
 {
-    RBTTestCase();
+    int arr[10] = {4, 2, 3, 5, 7, 6, 10, 9, 1, 8};
+    
+    CountingSort(&arr[0], 10);
+    
+    for(int i = 0; i < 10; ++i)
+    {
+        cout << arr[i] << " ";
+    }
 }
 
 void CBTTestCase()
@@ -158,46 +166,41 @@ void RBTTestCase()
 {
     MyRedBlackTree<int> rbt;
     
-    for(int i = 0; i < 50; ++i)
+    int key;
+    int value;
+    while (true)
     {
-        rbt.insert(i);
-    }
-    
-   int key;
-   int value;
-   while (true)
-   {
-       cout << "1. insert(int value)" << endl;
-       cout << "2. erase(int value)" << endl;
-       cout << "3. print" << endl;
-       cout << "4. size()" << endl;
-       cout << "5. end" << endl;
-       cout << "키를 입력하세요 : ";
-       cin >> key;
+        cout << "1. insert(int value)" << endl;
+        cout << "2. erase(int value)" << endl;
+        cout << "3. print" << endl;
+        cout << "4. size()" << endl;
+        cout << "5. end" << endl;
+        cout << "키를 입력하세요 : ";
+        cin >> key;
 
-       switch (key)
-       {
-           case 1:
-               cout << "삽입할 값을 입력하세요 : ";
-               cin >> value;
-               rbt.insert(value);
-               break;
-           case 2:
-               cout << "삭제할 값을 입력하세요 : ";
-               cin >> value;
-               rbt.erase(value);
-               break;
-           case 3:
-               rbt.print();
-               break;
-           case 4:
-               cout << "size() = " << rbt.size() << endl;
-               break;
-       }
+        switch (key)
+        {
+            case 1:
+                cout << "삽입할 값을 입력하세요 : ";
+                cin >> value;
+                rbt.insert(value);
+                break;
+            case 2:
+                cout << "삭제할 값을 입력하세요 : ";
+                cin >> value;
+                rbt.erase(value);
+                break;
+            case 3:
+                rbt.print();
+                break;
+            case 4:
+                cout << "size() = " << rbt.size() << endl;
+                break;
+        }
        
-       if (key > 4)
-           break;
-   }
+        if (key > 4)
+            break;
+    }
 }
 
 void HTTestCase()

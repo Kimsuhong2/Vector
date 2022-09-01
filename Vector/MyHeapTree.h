@@ -131,6 +131,7 @@ private:
                         swap(tree[index]->data, tree[parentIndex]->data);
                     else
                         break;
+                    index = parentIndex;
                 }
                 break;
             case HeapType::MinHeap:
@@ -142,6 +143,7 @@ private:
                         swap(tree[index]->data, tree[parentIndex]->data);
                     else
                         break;
+                    index = parentIndex;
                 }
                 break;
         }
@@ -193,33 +195,6 @@ private:
                 }
                 break;
         }
-        
-        while ((currentIndex * 2 + 1) <= (treeSize - 1))
-        {
-            size_t priorChildIndex = getPriorChildIndex(currentIndex);
-            
-            switch (type)
-            {
-                case HeapType::MaxHeap:
-                    // 우선순위가 높은 자식노드와 값을 비교해서, 자식의 값이 자신의 값보다 크면 swap;
-                    if (tree[currentIndex]->data < tree[priorChildIndex]->data)
-                        swap(tree[currentIndex]->data, tree[priorChildIndex]->data);
-                    else
-                        return;
-                    
-                    break;
-                    
-                case HeapType::MinHeap:
-                    // 우선순위가 높은 자식노드와 값을 비교해서, 자식의 값이 자신의 값보다 작으면 swap;
-                    if (tree[currentIndex]->data > tree[priorChildIndex]->data)
-                        swap(tree[currentIndex]->data, tree[priorChildIndex]->data);
-                    else
-                        return;
-                    
-                    break;
-            }
-            currentIndex = priorChildIndex;
-        }
     }
     
     /**
@@ -243,22 +218,26 @@ private:
         size_t leftChildIndex = parentIndex * 2 + 1;
         size_t rightChildIndex = parentIndex * 2 + 2;
         
+        if (tree[rightChildIndex] == nullptr)
+            return leftChildIndex;
+        
+        size_t priorIndex;
+        bool result;
+        
         switch (type)
         {
             case HeapType::MaxHeap:
-                if (tree[rightChildIndex] == nullptr || tree[leftChildIndex]->data > tree[rightChildIndex]->data)
-                    return leftChildIndex;
-                else
-                    return rightChildIndex;
+                result = tree[leftChildIndex]->data > tree[rightChildIndex]->data;
                 break;
                 
             case HeapType::MinHeap:
-                if (tree[rightChildIndex] == nullptr || tree[leftChildIndex]->data < tree[rightChildIndex]->data)
-                    return leftChildIndex;
-                else
-                    return rightChildIndex;
+                result = tree[leftChildIndex]->data < tree[rightChildIndex]->data;
                 break;
         }
+        
+        priorIndex = result ? leftChildIndex : rightChildIndex;
+        
+        return priorIndex;
     }
     
 public:

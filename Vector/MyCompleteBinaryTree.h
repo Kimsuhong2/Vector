@@ -233,8 +233,6 @@ public:
                 case POSTORDER:
                     postOrder(tree.front());
                     break;
-                default:
-                    break;
             }
         }
         cout << endl;
@@ -246,7 +244,44 @@ public:
             treeOrder(tree.front(), 0);
         cout << endl;
     }
+ 
+    void insert2(T val)
+    {
+        if (treeSize == 0)
+        {
+            push_back(val);
+            return;
+        }
+        
+        queue<TreeNode<T>*> q;
+        q.push(tree[0]);
+        TreeNode<T>* newNode = new TreeNode<T>(val);
+        
+        while (!q.empty())
+        {
+            TreeNode<T>* temp;
+            temp = q.front();
+            q.pop();
+            
+            if (temp->left == nullptr)
+            {
+                temp->left = newNode;
+                break;
+            }
+            else if (temp->right == nullptr)
+            {
+                temp->right = newNode;
+                break;
+            }
+            
+            q.push(temp->left);
+            q.push(temp->right);
+        }
+        
+        ++treeSize;
+    }
 };
+
 
 
 
