@@ -3,6 +3,8 @@
 #include <list>
 #include <iterator>
 #include <set>
+#include <map>
+#include <stack>
 #include "main.h"
 #include "MyVector.h"
 #include "QuickSort.h"
@@ -20,16 +22,40 @@ void BSTTestCase();
 void RBTTestCase();
 void HTTestCase();
 
+int solution(int n, vector<int> cores) {
+    vector<int> vec = cores;
+    int answer;
+    
+    if (n < cores.size())
+    {
+        return n;
+    }
+    
+    answer = cores.size();
+    
+    n -= cores.size();
+    
+    while(n > 0)
+    {
+        for(int i = 0; i < cores.size(); ++i)
+        {
+            --vec[i];
+            if (vec[i] == 0)
+            {
+                vec[i] = cores[i];
+                answer = i;
+                --n;
+            }
+        }
+    }
+    ++answer;
+    return answer++;
+}
+
 int main(int argc, const char* argv[])
 {
-    int arr[10] = {4, 2, 3, 5, 7, 6, 10, 9, 1, 8};
-    
-    CountingSort(&arr[0], 10);
-    
-    for(int i = 0; i < 10; ++i)
-    {
-        cout << arr[i] << " ";
-    }
+    vector<int> vec = {50, 50, 50, 30};
+    cout << solution(5, vec);
 }
 
 void CBTTestCase()

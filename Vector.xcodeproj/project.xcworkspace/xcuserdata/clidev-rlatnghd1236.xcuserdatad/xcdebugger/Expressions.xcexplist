@@ -18,6 +18,14 @@
          contextName = "MyVector&lt;int&gt;::assign(MyVector&lt;int&gt;::iterator const&amp;, MyVector&lt;int&gt;::iterator):MyVector.h">
       </ContextState>
       <ContextState
+         contextName = "solution(std::__1::vector&lt;int, std::__1::allocator&lt;int&gt; &gt;, std::__1::vector&lt;int, std::__1::allocator&lt;int&gt; &gt;):main.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "sum">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "MyVector&lt;TreeNode&lt;int&gt;*&gt;::operator[](unsigned long):MyVector.h">
       </ContextState>
       <ContextState
@@ -35,17 +43,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "MyVector&lt;int&gt;::reserve(unsigned long):MyVector.h">
-         <PersistentStrings>
-            <PersistentString
-               value = "&amp;newArr[1]">
-            </PersistentString>
-            <PersistentString
-               value = "&amp;array[1]">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "MyHeapTree&lt;int&gt;::eraseReBuild():MyHeapTree.h">
          <PersistentStrings>
             <PersistentString
@@ -53,6 +50,17 @@
             </PersistentString>
             <PersistentString
                value = "tree[priorChildIndex]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MyVector&lt;int&gt;::reserve(unsigned long):MyVector.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "&amp;newArr[1]">
+            </PersistentString>
+            <PersistentString
+               value = "&amp;array[1]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
